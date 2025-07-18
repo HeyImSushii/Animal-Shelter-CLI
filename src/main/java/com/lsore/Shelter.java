@@ -1,5 +1,12 @@
 package com.lsore;
 
+import com.lsore.animal.Animal;
+import com.lsore.animal.species.Cat;
+import com.lsore.animal.species.Dog;
+import com.lsore.enums.AdoptionStatus;
+import com.lsore.enums.AnimalGender;
+import com.lsore.enums.AnimalSpecie;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 

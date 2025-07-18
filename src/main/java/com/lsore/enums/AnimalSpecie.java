@@ -1,4 +1,4 @@
-package com.lsore;
+package com.lsore.enums;
 
 public enum AnimalSpecie {
     CAT("Cat"),

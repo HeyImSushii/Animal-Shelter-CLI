@@ -1,4 +1,4 @@
-package com.lsore;
+package com.lsore.enums;
 
 public enum AdoptionStatus {
     AVAILABLE("Available"),

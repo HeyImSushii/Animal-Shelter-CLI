@@ -1,16 +1,16 @@
-package com.lsore;
+package com.lsore.handlers;
 
 import com.lsore.utils.Utils;
 
 import java.util.*;
 
-public class InputHandler {
+public class UserInputHandler {
 
     private final Scanner scanner = new Scanner(System.in);
     private final Utils utils = new Utils();
     private final LinkedHashMap<String, String> userInputs;
 
-    public InputHandler() {
+    public UserInputHandler() {
         userInputs = new LinkedHashMap<>();
     }
 

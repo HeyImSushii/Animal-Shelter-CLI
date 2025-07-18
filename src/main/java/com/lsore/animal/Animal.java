@@ -1,4 +1,8 @@
-package com.lsore;
+package com.lsore.animal;
+
+import com.lsore.enums.AdoptionStatus;
+import com.lsore.enums.AnimalGender;
+import com.lsore.enums.AnimalSpecie;
 
 import java.time.LocalDate;
 
