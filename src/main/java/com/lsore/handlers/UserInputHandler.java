@@ -15,50 +15,61 @@ public class UserInputHandler {
     }
 
     /**
-     * Reads user input from CLI
+     * Reads user input from CLI as a string
      * @param key the key name to assign to the user input
      * @param message the message to print to the CLI
      */
-    public void readLineString(String key, String message) {
-        System.out.println(message);
-        userInputs.put(key, scanner.next());
-    }
-
-    /**
-     * Reads user input from CLI
-     * @param key the key name to assign to the user input
-     * @param message the message to print to the CLI
-     */
-    public void readLineInteger(String key, String message) {
-        System.out.println(message);
-        userInputs.put(key, Integer.toString(scanner.nextInt()));
-    }
-
-    /**
-     * Reads user input from CLI
-     * @param key the key name to assign to the user input
-     * @param message the message to print to the CLI
-     */
-    public void readLineBoolean(String key, String message) {
-        System.out.println(message);
-        userInputs.put(key, Boolean.toString((scanner.nextBoolean())));
-    }
-
-    /**
-     * Reads user input from CLI
-     * @param key the key name to assign to the user input
-     * @param object the enum object to read the input from
-     * @param message the message to print to the CLI
-     */
-    public void readLineEnum(String key, Object[] object, String message) {
+    public String readLineString(String key, String message) {
         System.out.println(message);
         String input = scanner.next();
-        if (utils.isValidEnumValue(object, input)) {
+        userInputs.put(key, input);
+        return input;
+    }
+
+    /**
+     * Reads user input from CLI as an integer
+     * @param key the key name to assign to the user input
+     * @param message the message to print to the CLI
+     */
+    public int readLineInteger(String key, String message) {
+        System.out.println(message);
+        int input = scanner.nextInt();
+        userInputs.put(key, Integer.toString(input));
+        return input;
+    }
+
+    /**
+     * Reads user input from CLI as a boolean
+     * @param key the key name to assign to the user input
+     * @param message the message to print to the CLI
+     */
+    public boolean readLineBoolean(String key, String message) {
+        System.out.println(message);
+        boolean input = scanner.nextBoolean();
+        userInputs.put(key, Boolean.toString((input)));
+        return input;
+    }
+
+    /**
+     *Reads the user input from the CLI as an enum value
+     * @param key the key name to assign to the user input
+     * @param values the values of the Enum class to read
+     * @param message the message to print to the CLI
+     * @return the enum value
+     * @param <T> requires the method signature to be an enum
+     */
+    public <T extends Enum<T>> T readLineEnum(String key, T[] values, String message) {
+        System.out.println(message);
+        String input = scanner.next();
+
+        if (utils.isValidEnumValue(values, input)) {
             System.err.println("Invalid specie type!");
-            return;
+            return null;
         }
 
-        userInputs.put(key, input);
+        T value = Enum.valueOf(values[0].getDeclaringClass(), input.toUpperCase());
+        userInputs.put(key, value.name());
+        return value;
     }
 
     /**

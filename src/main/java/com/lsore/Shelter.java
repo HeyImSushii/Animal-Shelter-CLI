@@ -51,6 +51,13 @@ public class Shelter {
         animals.add(new Dog(id, name, specie, age, gender, dateOfArrival, status, isTrained, walkFrequency));
     }
 
+    public void addAnimal(int id, String name, AnimalSpecie specie, int age, AnimalGender gender, LocalDate dateOfArrival, AdoptionStatus adoptionStatus) {
+        animals.add(new Animal(id, name, specie, age, gender, dateOfArrival, adoptionStatus));
+    }
+
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
+    }
     // Prints information about each animal.
     public void listAnimals() {
         getAnimals().forEach(animal -> {
@@ -96,11 +103,11 @@ public class Shelter {
     public int getAnimalsCount(AdoptionStatus adoptionStatus) {
         return switch (adoptionStatus) {
             case AVAILABLE ->
-                    Math.toIntExact(animals.stream().filter(x -> x.getAdoptionStatus().equals(AdoptionStatus.AVAILABLE)).count());
+                    Math.toIntExact(animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.AVAILABLE)).count());
             case RESERVED ->
-                    Math.toIntExact(animals.stream().filter(x -> x.getAdoptionStatus().equals(AdoptionStatus.RESERVED)).count());
+                    Math.toIntExact(animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.RESERVED)).count());
             case ADOPTED ->
-                    Math.toIntExact(animals.stream().filter(x -> x.getAdoptionStatus().equals(AdoptionStatus.ADOPTED)).count());
+                    Math.toIntExact(animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.ADOPTED)).count());
             case null -> animals.size();
         };
     }
