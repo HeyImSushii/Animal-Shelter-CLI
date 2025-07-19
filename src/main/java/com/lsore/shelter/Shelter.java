@@ -1,4 +1,4 @@
-package com.lsore;
+package com.lsore.shelter;
 
 import com.lsore.animal.Animal;
 import com.lsore.animal.species.Cat;
@@ -9,6 +9,7 @@ import com.lsore.enums.AnimalSpecie;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 
 public class Shelter {
 
@@ -19,7 +20,7 @@ public class Shelter {
     }
 
     /**
-     * Adds animal to the HashSet
+     * Adds the animal to the HashSet
      *
      * @param id random four digit ID
      * @param name the name of the animal
@@ -35,7 +36,7 @@ public class Shelter {
     }
 
     /**
-     * Adds animal to the HashSet
+     * Adds the animal to the HashSet
      *
      * @param id random four digit ID
      * @param name the name of the animal
@@ -51,14 +52,32 @@ public class Shelter {
         animals.add(new Dog(id, name, specie, age, gender, dateOfArrival, status, isTrained, walkFrequency));
     }
 
-    public void addAnimal(int id, String name, AnimalSpecie specie, int age, AnimalGender gender, LocalDate dateOfArrival, AdoptionStatus adoptionStatus) {
-        animals.add(new Animal(id, name, specie, age, gender, dateOfArrival, adoptionStatus));
-    }
-
+    /**
+     * Adds the animal to the HashSet
+     * @param animal the animal object
+     */
     public void addAnimal(Animal animal) {
         animals.add(animal);
     }
-    // Prints information about each animal.
+
+    /**
+     * Removes an animal from the Animals HashSet, by its ID.
+     * @param id the unique ID of the animal
+     */
+    public void removeAnimal(int id) {
+        for (Animal animal : animals) {
+            if (animal.getId() == id) {
+                animals.remove(animal);
+                return;
+            }
+        }
+        System.err.println("There is no animals in the shelter with ID " + id);
+    }
+
+    /**
+     * Prints information about the animal.
+     * NOTE: Will be deprecated in the future.
+     */
     public void listAnimals() {
         getAnimals().forEach(animal -> {
             if (animal instanceof Cat) {
@@ -88,6 +107,33 @@ public class Shelter {
     }
 
     /**
+     * Gets an animal by its unique iD
+     * @param id the unique four-digit id
+     * @return the requested animal
+     */
+    public Animal getAnimalById(int id) {
+        return animals.stream().filter(animal -> animal.getId() == id).findFirst().orElse(null);
+    }
+
+    /**
+     * Gets animals by specie
+     * @param specie the specie to search for
+     * @return list of animals by specie
+     */
+    public List<Animal> getAnimalsBySpecie(AnimalSpecie specie) {
+       return animals.stream().filter(animal -> animal.getSpecie().equals(specie)).toList();
+    }
+
+    /**
+     * Gets animals by adoption status
+     * @param status the adoption status to search for
+     * @return list of animals by adoption status
+     */
+    public List<Animal> getAnimalsByAdoptionStatus(AdoptionStatus status) {
+        return animals.stream().filter(animal -> animal.getAdoptionStatus().equals(status)).toList();
+    }
+
+    /**
      * Returns the animals in the HashSet as elements
      * @return the animals in the HashSet
      */
@@ -108,7 +154,6 @@ public class Shelter {
                     Math.toIntExact(animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.RESERVED)).count());
             case ADOPTED ->
                     Math.toIntExact(animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.ADOPTED)).count());
-            case null -> animals.size();
         };
     }
 }

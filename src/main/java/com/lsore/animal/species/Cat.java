@@ -16,6 +16,10 @@ public class Cat extends Animal {
         this.isIndoor = isIndoor;
     }
 
+    /**
+     * Returns True or False depending on if the cat is an indoor cat.
+     * @return true or false
+     */
     public boolean isIndoor() {
         return isIndoor;
     }

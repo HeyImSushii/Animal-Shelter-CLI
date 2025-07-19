@@ -18,10 +18,18 @@ public class Dog extends Animal {
         this.walkFrequency = walkFrequency;
     }
 
+    /**
+     * Returns True or False depending on if the animal is trained
+     * @return true or false
+     */
     public boolean isTrained() {
         return isTrained;
     }
 
+    /**
+     * The number of daily walks the animal requires
+     * @return number of daily walks as an integer
+     */
     public int getWalkFrequency() {
         return walkFrequency;
     }

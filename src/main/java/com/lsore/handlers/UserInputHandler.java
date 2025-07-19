@@ -62,11 +62,13 @@ public class UserInputHandler {
         System.out.println(message);
         String input = scanner.next();
 
+        // Checks if the provided enum values are valid
         if (utils.isValidEnumValue(values, input)) {
             System.err.println("Invalid specie type!");
             return null;
         }
 
+        // Returns the enum value
         T value = Enum.valueOf(values[0].getDeclaringClass(), input.toUpperCase());
         userInputs.put(key, value.name());
         return value;
