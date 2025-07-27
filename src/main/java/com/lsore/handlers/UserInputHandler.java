@@ -19,11 +19,11 @@ public class UserInputHandler {
      * @param key the key name to assign to the user input
      * @param message the message to print to the CLI
      */
-    public String readLineString(String key, String message) {
+    public Optional<String> readLineString(String key, String message) {
         System.out.println(message);
         String input = scanner.next();
         userInputs.put(key, input);
-        return input;
+        return Optional.of(input);
     }
 
     /**
@@ -31,11 +31,11 @@ public class UserInputHandler {
      * @param key the key name to assign to the user input
      * @param message the message to print to the CLI
      */
-    public int readLineInteger(String key, String message) {
+    public Optional<Integer> readLineInteger(String key, String message) {
         System.out.println(message);
         int input = scanner.nextInt();
         userInputs.put(key, Integer.toString(input));
-        return input;
+        return Optional.of(input);
     }
 
     /**
@@ -43,11 +43,11 @@ public class UserInputHandler {
      * @param key the key name to assign to the user input
      * @param message the message to print to the CLI
      */
-    public boolean readLineBoolean(String key, String message) {
+    public Optional<Boolean> readLineBoolean(String key, String message) {
         System.out.println(message);
         boolean input = scanner.nextBoolean();
         userInputs.put(key, Boolean.toString((input)));
-        return input;
+        return Optional.of(input);
     }
 
     /**

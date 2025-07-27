@@ -53,9 +53,9 @@ public class AnimalShelterCLI {
         UserInputHandler userInputHandler = new UserInputHandler();
         Animal animal = new Animal(
                 utils.randomIdGenerator(),
-                userInputHandler.readLineString("name", "Please enter the name:"),
+                userInputHandler.readLineString("name", "Please enter the name:").orElseThrow(),
                 userInputHandler.readLineEnum("specie", AnimalSpecie.values(), "Please enter the specie:"),
-                userInputHandler.readLineInteger("age", "Please enter the age:"),
+                userInputHandler.readLineInteger("age", "Please enter the age:").orElseThrow(),
                 userInputHandler.readLineEnum("gender", AnimalGender.values(), "Please enter the gender:"),
                 LocalDate.now(),
                 AdoptionStatus.AVAILABLE);
@@ -139,7 +139,6 @@ public class AnimalShelterCLI {
 
         shelter.getAnimalById(id).setAdoptionStatus(AdoptionStatus.valueOf(adoptionStatus.toUpperCase()));
         System.out.println(colors.getGreen() + "The adoption status for the animal with ID " + colors.getMagenta() + id + colors.getGreen() + " has been changed to " + colors.getMagenta() + shelter.getAnimalById(id).getAdoptionStatus());
-
     }
 
     /**
@@ -170,10 +169,10 @@ public class AnimalShelterCLI {
      * @param animal the animal object
      */
     private void showAnimalInformation(Animal animal) {
-        System.out.printf("%sID: %s%d%n", colors.getGreen(), colors.getWhite(), animal.getId());
-        System.out.printf("%sName: %s%s%n", colors.getGreen(), colors.getWhite(), animal.getName());
-        System.out.printf("%sSpecie: %s%s%n", colors.getGreen(), colors.getWhite(), animal.getSpecie().getSpecie());
-        System.out.printf("%sAge: %s%d%n", colors.getGreen(), colors.getWhite(), animal.getAge());
+        System.out.printf("%sID: %s%s%n", colors.getGreen(), colors.getWhite(), animal.getUniqueId());
+        System.out.printf("%sName: %s%s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalName());
+        System.out.printf("%sSpecie: %s%s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalSpecie().getSpecie());
+        System.out.printf("%sAge: %s%s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalAge());
         System.out.printf("%sDate of Arrival: %s%s%n", colors.getGreen(), colors.getWhite(), animal.getDateOfArrival());
         System.out.printf("%sAdoption Status: %s%s%n", colors.getGreen(), colors.getWhite(), animal.getAdoptionStatus().getStatus());
     }

@@ -6,6 +6,7 @@ import com.lsore.animal.species.Dog;
 import com.lsore.enums.AdoptionStatus;
 import com.lsore.enums.AnimalGender;
 import com.lsore.enums.AnimalSpecie;
+import com.lsore.storage.AnimalFile;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -22,138 +23,117 @@ public class Shelter {
     /**
      * Adds the animal to the HashSet
      *
-     * @param id random four digit ID
-     * @param name the name of the animal
-     * @param specie the specie of the animal
-     * @param age the age of the animal
-     * @param gender the gender of the animal
+     * @param uniqueId      random four digit ID
+     * @param animalName    the name of the animal
+     * @param animalSpecie  the specie of the animal
+     * @param animalAge     the age of the animal
+     * @param animalGender  the gender of the animal
      * @param dateOfArrival the date of arrival at the shelter
-     * @param status the adoption status of the animal (e.g. AVAILABLE, RESERVED or ADOPTED)
-     * @param isIndoor if the cat is an indoor cat
+     * @param adoptionStatus the adoption status of the animal (e.g. AVAILABLE, RESERVED or ADOPTED)
+     * @param isIndoor     if the cat is an indoor cat
      */
-    public void addAnimal(int id, String name, AnimalSpecie specie, int age, AnimalGender gender, LocalDate dateOfArrival, AdoptionStatus status, boolean isIndoor) {
-        animals.add(new Cat(id, name, specie, age, gender, dateOfArrival, status, isIndoor));
+    public void addAnimal(int uniqueId, String animalName, AnimalSpecie animalSpecie, int animalAge,
+                          AnimalGender animalGender, LocalDate dateOfArrival,
+                          AdoptionStatus adoptionStatus, boolean isIndoor) {
+        animals.add(new Cat(uniqueId, animalName, animalSpecie, animalAge, animalGender, dateOfArrival, adoptionStatus, isIndoor));
     }
 
     /**
      * Adds the animal to the HashSet
      *
-     * @param id random four digit ID
-     * @param name the name of the animal
-     * @param specie the specie of the animal
-     * @param age the age of the animal
-     * @param gender the gender of the animal
+     * @param uniqueId      random four digit ID
+     * @param animalName    the name of the animal
+     * @param animalSpecie  the specie of the animal
+     * @param animalAge     the age of the animal
+     * @param animalGender  the gender of the animal
      * @param dateOfArrival the date of arrival at the shelter
-     * @param status the adoption status of the animal (e.g. AVAILABLE, RESERVED or ADOPTED)
-     * @param isTrained if the dog is trained
+     * @param adoptionStatus the adoption status of the animal (e.g. AVAILABLE, RESERVED or ADOPTED)
+     * @param isTrained    if the dog is trained
      * @param walkFrequency number of daily walks preferred by the animal
      */
-    public void addAnimal(int id, String name, AnimalSpecie specie, int age, AnimalGender gender, LocalDate dateOfArrival, AdoptionStatus status, boolean isTrained, int walkFrequency) {
-        animals.add(new Dog(id, name, specie, age, gender, dateOfArrival, status, isTrained, walkFrequency));
+    public void addAnimal(int uniqueId, String animalName, AnimalSpecie animalSpecie, int animalAge,
+                          AnimalGender animalGender, LocalDate dateOfArrival,
+                          AdoptionStatus adoptionStatus, boolean isTrained, int walkFrequency) {
+        animals.add(new Dog(uniqueId, animalName, animalSpecie, animalAge, animalGender, dateOfArrival, adoptionStatus, isTrained, walkFrequency));
     }
 
     /**
      * Adds the animal to the HashSet
-     * @param animal the animal object
+     *
+     * @param animal the animal object to add
      */
     public void addAnimal(Animal animal) {
+        // TODO: Consider persisting to file in the future
+        AnimalFile animalFile = new AnimalFile();
         animals.add(animal);
     }
 
     /**
-     * Removes an animal from the Animals HashSet, by its ID.
-     * @param id the unique ID of the animal
+     * Removes an animal from the animals HashSet by its unique ID.
+     * Prints an error message if no animal with the ID is found.
+     *
+     * @param uniqueId the unique ID of the animal to remove
      */
-    public void removeAnimal(int id) {
-        for (Animal animal : animals) {
-            if (animal.getId() == id) {
-                animals.remove(animal);
-                return;
-            }
-        }
-        System.err.println("There is no animals in the shelter with ID " + id);
+    public void removeAnimal(int uniqueId) {
+        boolean removed = animals.removeIf(animal -> animal.getUniqueId() == uniqueId);
+        if (!removed) System.err.println("No animal found in the shelter with ID " + uniqueId);
     }
 
     /**
-     * Prints information about the animal.
-     * NOTE: Will be deprecated in the future.
+     * Gets an animal by its unique ID.
+     *
+     * @param uniqueId the unique four-digit ID
+     * @return the animal with the matching ID, or null if none found
      */
-    public void listAnimals() {
-        getAnimals().forEach(animal -> {
-            if (animal instanceof Cat) {
-                System.out.println("ID: " + animal.getId());
-                System.out.println("Name: " + animal.getName());
-                System.out.println("Specie: " + animal.getSpecie());
-                System.out.println("Age: " + animal.getAge());
-                System.out.println("Gender: " + animal.getGender());
-                System.out.println("Date of Arrival: " + animal.getDateOfArrival());
-                System.out.println("Adoption Status: " + animal.getAdoptionStatus());
-                System.out.println("isIndoor: " + ((Cat) animal).isIndoor());
-                System.out.println("\n");
-            }
-            if (animal instanceof Dog) {
-                System.out.println("ID: " + animal.getId());
-                System.out.println("Name: " + animal.getName());
-                System.out.println("Specie: " + animal.getSpecie());
-                System.out.println("Age: " + animal.getAge());
-                System.out.println("Gender: " + animal.getGender());
-                System.out.println("Date of Arrival: " + animal.getDateOfArrival());
-                System.out.println("Adoption Status: " + animal.getAdoptionStatus());
-                System.out.println("isTrained: " + ((Dog) animal).isTrained());
-                System.out.println("walkFrequency: " + ((Dog) animal).getWalkFrequency());
-                System.out.println("\n");
-            }
-        });
+    public Animal getAnimalById(int uniqueId) {
+        return animals.stream()
+                .filter(animal -> animal.getUniqueId() == uniqueId)
+                .findFirst()
+                .orElse(null);
     }
 
     /**
-     * Gets an animal by its unique iD
-     * @param id the unique four-digit id
-     * @return the requested animal
+     * Gets a list of animals by their specie.
+     *
+     * @param animalSpecie the specie to search for
+     * @return list of animals matching the specie
      */
-    public Animal getAnimalById(int id) {
-        return animals.stream().filter(animal -> animal.getId() == id).findFirst().orElse(null);
+    public List<Animal> getAnimalsBySpecie(AnimalSpecie animalSpecie) {
+        return animals.stream()
+                .filter(animal -> animal.getAnimalSpecie().equals(animalSpecie))
+                .toList();
     }
 
     /**
-     * Gets animals by specie
-     * @param specie the specie to search for
-     * @return list of animals by specie
+     * Gets a list of animals by their adoption status.
+     *
+     * @param adoptionStatus the adoption status to search for
+     * @return list of animals matching the adoption status
      */
-    public List<Animal> getAnimalsBySpecie(AnimalSpecie specie) {
-       return animals.stream().filter(animal -> animal.getSpecie().equals(specie)).toList();
+    public List<Animal> getAnimalsByAdoptionStatus(AdoptionStatus adoptionStatus) {
+        return animals.stream()
+                .filter(animal -> animal.getAdoptionStatus().equals(adoptionStatus))
+                .toList();
     }
 
     /**
-     * Gets animals by adoption status
-     * @param status the adoption status to search for
-     * @return list of animals by adoption status
-     */
-    public List<Animal> getAnimalsByAdoptionStatus(AdoptionStatus status) {
-        return animals.stream().filter(animal -> animal.getAdoptionStatus().equals(status)).toList();
-    }
-
-    /**
-     * Returns the animals in the HashSet as elements
-     * @return the animals in the HashSet
+     * Returns all animals in the shelter.
+     *
+     * @return the animals HashSet
      */
     public HashSet<Animal> getAnimals() {
         return animals;
     }
 
     /**
-     * Counts number of animals by status
-     * @param adoptionStatus the adoption status
-     * @return the number of animals by status
+     * Counts number of animals by a given adoption status.
+     *
+     * @param adoptionStatus the adoption status to count
+     * @return the count of animals with the given status
      */
     public int getAnimalsCount(AdoptionStatus adoptionStatus) {
-        return switch (adoptionStatus) {
-            case AVAILABLE ->
-                    Math.toIntExact(animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.AVAILABLE)).count());
-            case RESERVED ->
-                    Math.toIntExact(animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.RESERVED)).count());
-            case ADOPTED ->
-                    Math.toIntExact(animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.ADOPTED)).count());
-        };
+        return Math.toIntExact(animals.stream()
+                .filter(animal -> animal.getAdoptionStatus().equals(adoptionStatus))
+                .count());
     }
 }

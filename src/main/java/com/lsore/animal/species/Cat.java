@@ -6,21 +6,29 @@ import com.lsore.enums.AnimalGender;
 import com.lsore.enums.AnimalSpecie;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class Cat extends Animal {
 
     private final boolean isIndoor;
 
-    public Cat(int id, String name, AnimalSpecie specie, int age, AnimalGender gender, LocalDate dateOfArrival, AdoptionStatus adoptionStatus, boolean isIndoor) {
-        super(id, name, specie, age, gender, dateOfArrival, adoptionStatus);
+    public Cat(int uniqueId,
+               String animalName,
+               AnimalSpecie animalSpecie,
+               int animalAge,
+               AnimalGender animalGender,
+               LocalDate dateOfArrival,
+               AdoptionStatus adoptionStatus,
+               boolean isIndoor) {
+        super(uniqueId, animalName, animalSpecie, animalAge, animalGender, dateOfArrival, adoptionStatus);
         this.isIndoor = isIndoor;
     }
 
     /**
-     * Returns True or False depending on if the cat is an indoor cat.
-     * @return true or false
+     * Returns whether the cat is an indoor cat.
+     * @return Optional of true or false
      */
-    public boolean isIndoor() {
-        return isIndoor;
+    public Optional<Boolean> isIndoor() {
+        return Optional.of(isIndoor);
     }
 }

@@ -8,62 +8,62 @@ import java.time.LocalDate;
 
 public class Animal {
 
-    private int id;
-    private String name;
-    private AnimalSpecie specie;
-    private int age;
-    private AnimalGender gender;
+    private int uniqueId;
+    private String animalName;
+    private AnimalSpecie animalSpecie;
+    private int animalAge;
+    private AnimalGender animalGender;
     private LocalDate dateOfArrival;
     private AdoptionStatus adoptionStatus;
 
-    public Animal(int id, String name, AnimalSpecie specie, int age, AnimalGender gender, LocalDate dateOfArrival, AdoptionStatus adoptionStatus) {
-        this.id = id;
-        this.name = name;
-        this.specie = specie;
-        this.age = age;
-        this.gender = gender;
+    public Animal(int uniqueId, String animalName, AnimalSpecie animalSpecie, int animalAge, AnimalGender animalGender, LocalDate dateOfArrival, AdoptionStatus adoptionStatus) {
+        this.uniqueId = uniqueId;
+        this.animalName = animalName;
+        this.animalSpecie = animalSpecie;
+        this.animalAge = animalAge;
+        this.animalGender = animalGender;
         this.dateOfArrival = dateOfArrival;
         this.adoptionStatus = adoptionStatus;
     }
 
-    public int getId() {
-        return id;
+    public int getUniqueId() {
+        return uniqueId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUniqueId(int uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
-    public String getName() {
-        return name;
+    public String getAnimalName() {
+        return animalName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAnimalName(String animalName) {
+        this.animalName = animalName;
     }
 
-    public AnimalSpecie getSpecie() {
-        return specie;
+    public AnimalSpecie getAnimalSpecie() {
+        return animalSpecie;
     }
 
-    public void setSpecie(AnimalSpecie specie) {
-        this.specie = specie;
+    public void setAnimalSpecie(AnimalSpecie animalSpecie) {
+        this.animalSpecie = animalSpecie;
     }
 
-    public int getAge() {
-        return age;
+    public int getAnimalAge() {
+        return animalAge;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAnimalAge(int animalAge) {
+        this.animalAge = animalAge;
     }
 
-    public AnimalGender getGender() {
-        return gender;
+    public AnimalGender getAnimalGender() {
+        return animalGender;
     }
 
-    public void setGender(AnimalGender gender) {
-        this.gender = gender;
+    public void setAnimalGender(AnimalGender animalGender) {
+        this.animalGender = animalGender;
     }
 
     public LocalDate getDateOfArrival() {

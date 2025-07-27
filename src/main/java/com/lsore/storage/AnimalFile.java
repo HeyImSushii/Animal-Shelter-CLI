@@ -1,16 +1,18 @@
 package com.lsore.storage;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.lsore.animal.Animal;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.HashSet;
 
 public class AnimalFile {
 
     private final String directoryPath = System.getProperty("user.home") + "/Animal-Shelter-CLI/";
-    private final String filePath = directoryPath + "animals.json";
+    private final String filePath = directoryPath + "animals2.json";
 
     public void createFile() {
         File directory = new File(directoryPath);
@@ -35,12 +37,14 @@ public class AnimalFile {
         }
     }
 
-    public void writeToFile(HashMap<String, String> hashMap) {
+    public void writeToFile(HashSet<Animal> hashSet) {
         try {
             try (FileWriter fileWriter = new FileWriter(filePath, true)) {
-                Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
-                gson.toJson(hashMap, fileWriter);
-                fileWriter.flush();
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.registerModule(new JavaTimeModule());
+                String json = objectMapper.writeValueAsString(hashSet);
+
+                objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), hashSet);
             }
         } catch (IOException e) {
             e.printStackTrace();
