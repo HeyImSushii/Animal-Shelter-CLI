@@ -28,7 +28,7 @@ public class Cat extends Animal {
      * Returns whether the cat is an indoor cat.
      * @return Optional of true or false
      */
-    public Optional<Boolean> isIndoor() {
-        return Optional.of(isIndoor);
+    public boolean isIndoor() {
+        return isIndoor;
     }
 }

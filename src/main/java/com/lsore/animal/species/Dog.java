@@ -29,17 +29,17 @@ public class Dog extends Animal {
 
     /**
      * Returns whether the dog is trained.
-     * @return Optional of true or false
+     * @return True or False
      */
-    public Optional<Boolean> isTrained() {
-        return Optional.of(isTrained);
+    public boolean isTrained() {
+        return isTrained;
     }
 
     /**
      * Returns how many times the dog needs to be walked per day.
-     * @return Optional of number of daily walks
+     * @return Number of daily walks
      */
-    public Optional<Integer> getWalkFrequency() {
-        return Optional.of(walkFrequency);
+    public int getWalkFrequency() {
+        return walkFrequency;
     }
 }

@@ -1,13 +1,12 @@
 package com.lsore.handlers;
 
-import com.lsore.utils.Utils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class UserInputHandler {
 
     private final Scanner scanner = new Scanner(System.in);
-    private final Utils utils = new Utils();
     private final LinkedHashMap<String, String> userInputs;
 
     public UserInputHandler() {
@@ -19,11 +18,11 @@ public class UserInputHandler {
      * @param key the key name to assign to the user input
      * @param message the message to print to the CLI
      */
-    public Optional<String> readLineString(String key, String message) {
+    public String readLineString(String key, String message) {
         System.out.println(message);
         String input = scanner.next();
         userInputs.put(key, input);
-        return Optional.of(input);
+        return input;
     }
 
     /**
@@ -31,11 +30,22 @@ public class UserInputHandler {
      * @param key the key name to assign to the user input
      * @param message the message to print to the CLI
      */
-    public Optional<Integer> readLineInteger(String key, String message) {
-        System.out.println(message);
-        int input = scanner.nextInt();
-        userInputs.put(key, Integer.toString(input));
-        return Optional.of(input);
+    public int readLineInteger(String key, String message) {
+        while (true) {
+            System.out.println(message);
+            String input = scanner.next();
+            try {
+                int number = Integer.parseInt(input);
+                if (!(number >= 0)) {
+                    System.err.println("Invalid input! The integer may not be less than 0.");
+                    return 0;
+                }
+                userInputs.put(key, Integer.toString(number));
+                return number;
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input! The input value was not an integer.");
+            }
+        }
     }
 
     /**
@@ -43,35 +53,33 @@ public class UserInputHandler {
      * @param key the key name to assign to the user input
      * @param message the message to print to the CLI
      */
-    public Optional<Boolean> readLineBoolean(String key, String message) {
+    public boolean readLineBoolean(String key, String message) {
         System.out.println(message);
         boolean input = scanner.nextBoolean();
-        userInputs.put(key, Boolean.toString((input)));
-        return Optional.of(input);
+        userInputs.put(key, Boolean.toString(input));
+        return input;
     }
 
     /**
-     *Reads the user input from the CLI as an enum value
+     * Reads the user input from the CLI as an enum value
      * @param key the key name to assign to the user input
      * @param values the values of the Enum class to read
      * @param message the message to print to the CLI
      * @return the enum value
      * @param <T> requires the method signature to be an enum
      */
-    public <T extends Enum<T>> T readLineEnum(String key, T[] values, String message) {
-        System.out.println(message);
-        String input = scanner.next();
-
-        // Checks if the provided enum values are valid
-        if (utils.isValidEnumValue(values, input)) {
-            System.err.println("Invalid specie type!");
-            return null;
+    public <T extends Enum<T>> T readLineEnum(String key, @NotNull T[] values, String message) {
+        while (true) {
+            System.out.println(message);
+            String input = scanner.next();
+            try {
+                T value = Enum.valueOf(values[0].getDeclaringClass(), input.toUpperCase());
+                userInputs.put(key, value.name());
+                return value;
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid input! The input value must be: " + Arrays.stream(values).toList());
+            }
         }
-
-        // Returns the enum value
-        T value = Enum.valueOf(values[0].getDeclaringClass(), input.toUpperCase());
-        userInputs.put(key, value.name());
-        return value;
     }
 
     /**

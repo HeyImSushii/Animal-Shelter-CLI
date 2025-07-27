@@ -54,7 +54,7 @@ Follow on-screen prompts to add, list, and manage animals.
    * Currently only supports one JSON object.
  * Implement search and filter features 
  * Replace option 5 in the main menu with a submenu for updating animal info (e.g., name, age, adoption status)
- * Implement exception handling and input validation 
+ ~~* Implement exception handling and input validation~~ 
  * Implement database integration for scalability
  * Implement unit testing and continuous integration
 
