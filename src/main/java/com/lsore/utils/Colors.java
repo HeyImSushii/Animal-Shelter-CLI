@@ -8,6 +8,7 @@ public class Colors {
     protected final String magenta = "\u001B[35m";
     protected final String white = "\u001B[97m";
     protected final String gray = "\u001B[90m";
+    protected final String red = "\u001B[38;5;217m";
 
     public String getReset() {
         return reset;
@@ -31,5 +32,9 @@ public class Colors {
 
     public String getGray() {
         return gray;
+    }
+
+    public String getRed() {
+        return red;
     }
 }

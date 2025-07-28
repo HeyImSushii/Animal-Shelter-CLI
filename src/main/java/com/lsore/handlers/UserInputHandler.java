@@ -38,7 +38,6 @@ public class UserInputHandler {
                 int number = Integer.parseInt(input);
                 if (!(number >= 0)) {
                     System.err.println("Invalid input! The integer may not be less than 0.");
-                    return 0;
                 }
                 userInputs.put(key, Integer.toString(number));
                 return number;
