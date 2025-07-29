@@ -4,61 +4,51 @@ import com.lsore.animal.Animal;
 import com.lsore.animal.species.Cat;
 import com.lsore.animal.species.Dog;
 import com.lsore.enums.AdoptionStatus;
-import com.lsore.enums.AnimalGender;
 import com.lsore.enums.AnimalSpecie;
-import com.lsore.handlers.UserInputHandler;
 import com.lsore.service.ShelterService;
-import com.lsore.utils.Colors;
-import com.lsore.utils.Utils;
 
-import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
 
 public class ShelterController {
 
-    private final Utils utils = new Utils();
-    private final Colors colors = new Colors();
     private final ShelterService shelterService;
 
     public ShelterController(ShelterService shelterService) {
         this.shelterService = shelterService;
     }
 
-    public void addAnimal() {
-        UserInputHandler userInputHandler = new UserInputHandler();
-        AnimalSpecie animalSpecie = userInputHandler.readLineEnum("specie", AnimalSpecie.values(), "Please enter the specie:");
+    // Adds a Cat Animal tot the shelter
+    public void addAnimal(Cat cat) {
+        shelterService.addAnimal(cat);
+    }
 
-        switch (animalSpecie) {
-            case CAT -> {
-                Animal animal = new Cat(
-                        utils.randomIdGenerator(),
-                        userInputHandler.readLineString("name", "Please enter the name:"),
-                        animalSpecie,
-                        userInputHandler.readLineInteger("age", "Please enter the age:"),
-                        userInputHandler.readLineEnum("gender", AnimalGender.values(), "Please enter the gender:"),
-                        LocalDate.now(),
-                        AdoptionStatus.AVAILABLE,
-                        userInputHandler.readLineBoolean("isIndoor", "Is it an indoor cat? (True or False):")
-                );
-                shelterService.addAnimal(animal);
-                System.out.println(colors.getGreen() + "The animal was added to the shelter:");
-            }
-            case DOG -> {
-                Animal animal = new Dog(
-                        utils.randomIdGenerator(),
-                        userInputHandler.readLineString("name", "Please enter the name:"),
-                        animalSpecie,
-                        userInputHandler.readLineInteger("age", "Please enter the age:"),
-                        userInputHandler.readLineEnum("gender", AnimalGender.values(), "Please enter the gender:"),
-                        LocalDate.now(),
-                        AdoptionStatus.AVAILABLE,
-                        userInputHandler.readLineBoolean("isTrained", "Is the dog trained? (True or False):"),
-                        userInputHandler.readLineInteger("walkFrequency", "Please enter number of daily walks:")
-                );
-                shelterService.addAnimal(animal);
-                System.out.println(colors.getGreen() + "The animal was added to the shelter:");
-            }
-            case null, default -> {
-            }
-        }
+    // Adds a Dog Animal to the shelter
+    public void addAnimal(Dog dog) {
+        shelterService.addAnimal(dog);
+    }
+
+    public boolean removeAnimal(int uniqueId) {
+        return shelterService.removeAnimalById(uniqueId);
+    }
+
+    public HashSet<Animal> getAnimals() {
+        return shelterService.getAllAnimals();
+    }
+
+    public List<Animal> getAnimalsBySpecie(AnimalSpecie animalSpecie) {
+        return shelterService.getAllAnimals().stream()
+                .filter(animal -> animal.getAnimalSpecie().equals(animalSpecie))
+                .toList();
+    }
+
+    public List<Animal> getAnimalsByAdoptionStatus(AdoptionStatus adoptionStatus) {
+        return shelterService.getAllAnimals().stream()
+                .filter(animal -> animal.getAdoptionStatus().equals(adoptionStatus))
+                .toList();
+    }
+
+    public int getAnimalCountByStatus(AdoptionStatus adoptionStatus) {
+        return shelterService.getAnimalCountByStatus(adoptionStatus);
     }
 }
