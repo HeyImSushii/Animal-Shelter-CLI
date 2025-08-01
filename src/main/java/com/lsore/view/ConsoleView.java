@@ -24,20 +24,20 @@ public class ConsoleView {
         this.shelterController = shelterController;
     }
 
+    // Prompts the user inputs required to add an Animal to the shelter
     public void promptAddAnimal() {
-        AnimalSpecie animalSpecie = userInputHandler.readLineEnum("specie", AnimalSpecie.values(), "Please enter the specie:");
-
+        AnimalSpecie animalSpecie = userInputHandler.readLineEnum(AnimalSpecie.values(), "Please enter the specie:");
         switch (animalSpecie) {
             case CAT -> {
                 Cat animal = new Cat(
                         utils.randomIdGenerator(),
-                        userInputHandler.readLineString("name", "Please enter the name:"),
+                        userInputHandler.readLineString("Please enter the name:"),
                         animalSpecie,
-                        userInputHandler.readLineInteger("age", "Please enter the age:"),
-                        userInputHandler.readLineEnum("gender", AnimalGender.values(), "Please enter the gender:"),
+                        userInputHandler.readLineInteger("Please enter the age:"),
+                        userInputHandler.readLineEnum(AnimalGender.values(), "Please enter the gender:"),
                         LocalDate.now(),
                         AdoptionStatus.AVAILABLE,
-                        userInputHandler.readLineBoolean("isIndoor", "Is it an indoor cat? (True or False):")
+                        userInputHandler.readLineBoolean("Is it an indoor cat? (True or False):")
                 );
                 shelterController.addAnimal(animal);
                 System.out.println(colors.getGreen() + "The animal was added to the shelter:");
@@ -45,25 +45,26 @@ public class ConsoleView {
             case DOG -> {
                 Dog animal = new Dog(
                         utils.randomIdGenerator(),
-                        userInputHandler.readLineString("name", "Please enter the name:"),
+                        userInputHandler.readLineString("Please enter the name:"),
                         animalSpecie,
-                        userInputHandler.readLineInteger("age", "Please enter the age:"),
-                        userInputHandler.readLineEnum("gender", AnimalGender.values(), "Please enter the gender:"),
+                        userInputHandler.readLineInteger("Please enter the age:"),
+                        userInputHandler.readLineEnum(AnimalGender.values(), "Please enter the gender:"),
                         LocalDate.now(),
                         AdoptionStatus.AVAILABLE,
-                        userInputHandler.readLineBoolean("isTrained", "Is the dog trained? (True or False):"),
-                        userInputHandler.readLineInteger("walkFrequency", "Please enter number of daily walks:")
+                        userInputHandler.readLineBoolean("Is the dog trained? (True or False):"),
+                        userInputHandler.readLineInteger("Please enter number of daily walks:")
                 );
                 shelterController.addAnimal(animal);
-                System.out.println(colors.getGreen() + "The animal was added to the shelter:");
+                System.out.printf("%sThe animal was added to the shelter:%n", colors.getGreen());
             }
             case null, default -> {
             }
         }
     }
 
+    // Displays animals by their specie
     public void promptListAnimalsBySpecie() {
-        AnimalSpecie animalSpecie = userInputHandler.readLineEnum("specie", AnimalSpecie.values(), "Please enter the specie:");
+        AnimalSpecie animalSpecie = userInputHandler.readLineEnum(AnimalSpecie.values(), "Please enter the specie:");
         if (shelterController.getAnimalsBySpecie(animalSpecie).isEmpty()) {
             System.out.printf("%sThere are no animals with the specie %s%s%s in the shelter.%n", colors.getRed(), colors.getMagenta(), animalSpecie, colors.getRed());
             return;
@@ -75,8 +76,9 @@ public class ConsoleView {
         System.out.printf("%s────────────────────────────────%s%n", colors.getBlue(), colors.getWhite());
     }
 
+    // Displays animals by their adoption status
     public void promptListAnimalsByAdoptionStatus() {
-        AdoptionStatus adoptionStatus = userInputHandler.readLineEnum("adoptionStatus", AdoptionStatus.values(), "Please enter the adoption status:");
+        AdoptionStatus adoptionStatus = userInputHandler.readLineEnum(AdoptionStatus.values(), "Please enter the adoption status:");
         if (shelterController.getAnimalsByAdoptionStatus(adoptionStatus).isEmpty()) {
             System.out.printf("%sThere are no animals with the adoption status %s%s%s in the shelter.%n", colors.getRed(), colors.getMagenta(), adoptionStatus, colors.getRed());
             return;
@@ -88,8 +90,9 @@ public class ConsoleView {
         System.out.printf("%s────────────────────────────────%s%n", colors.getBlue(), colors.getWhite());
     }
 
+    // Prompts the required user inputs to remove an Animal from the shelter
     public void promptRemoveAnimal() {
-        int uniqueId = userInputHandler.readLineInteger("id", "Please enter the ID:");
+        int uniqueId = userInputHandler.readLineInteger("Please enter the ID:");
         if (shelterController.removeAnimal(uniqueId)) {
             shelterController.removeAnimal(uniqueId);
             System.out.printf("%sThe animal with the ID %s%d%s was removed from the shelter.%n", colors.getGreen(), colors.getMagenta(), uniqueId, colors.getGreen());
@@ -97,7 +100,6 @@ public class ConsoleView {
         }
         System.out.printf("%sThere is no animals with the ID %s%d%s in the shelter.%n", colors.getRed(), colors.getMagenta(), uniqueId, colors.getRed());
     }
-
 
     /**
      * Displays information about the Animal
@@ -131,6 +133,7 @@ public class ConsoleView {
         }
     }
 
+    // Displays a list of animals
     public void promptListAnimals() {
         shelterController.getAnimals().forEach(animal -> {
             System.out.printf("%s────────────────────────────────%s%n", colors.getBlue(), colors.getWhite());
@@ -150,5 +153,12 @@ public class ConsoleView {
                 colors.getWhite());
         System.out.printf("%s──────────────────────────────────────────────────────────────────────────────────%s%n",
                 colors.getBlue(), colors.getWhite());
+    }
+
+    public void promptUpdateAnimalAdoptionStatus() {
+        int uniqueId = userInputHandler.readLineInteger("Please enter the ID:");
+        AdoptionStatus adoptionStatus = userInputHandler.readLineEnum(AdoptionStatus.values(), "Please enter the adoption status:");
+        shelterController.getAnimalByUniqueId(uniqueId).setAdoptionStatus(adoptionStatus);
+        System.out.println("updated");
     }
 }

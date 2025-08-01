@@ -18,36 +18,75 @@ public class ShelterController {
         this.shelterService = shelterService;
     }
 
-    // Adds a Cat Animal tot the shelter
+    /**
+     * Adds a Cat Animal to the shelter
+     * @param cat The cat object
+     */
     public void addAnimal(Cat cat) {
         shelterService.addAnimal(cat);
     }
 
-    // Adds a Dog Animal to the shelter
+    /**
+     * Adds a Dog Animal to the shelter
+     * @param dog The dog object
+     */
     public void addAnimal(Dog dog) {
         shelterService.addAnimal(dog);
     }
 
+    /**
+     * Removes an Animal from the shelter by its unique ID
+     * @param uniqueId the unique ID to look for
+     * @return True or False
+     */
     public boolean removeAnimal(int uniqueId) {
         return shelterService.removeAnimalById(uniqueId);
     }
 
+    /**
+     * Fetches all the Animals
+     * @return the Animals as a HashSet
+     */
     public HashSet<Animal> getAnimals() {
         return shelterService.getAllAnimals();
     }
 
+    /**
+     * Fetches an Animal by its unique ID
+     * @param uniqueId the unique ID to look for
+     * @return the Animal as an object
+     */
+    public Animal getAnimalByUniqueId(int uniqueId) {
+        return getAnimals().stream().filter(animal -> animal.getUniqueId() == uniqueId).findFirst().orElseThrow();
+    }
+
+    /**
+     * Fetches a list of Animals based on its specie
+     * @param animalSpecie the specie to look for
+     * @return a list of Animals by the specified specie
+     */
     public List<Animal> getAnimalsBySpecie(AnimalSpecie animalSpecie) {
         return shelterService.getAllAnimals().stream()
                 .filter(animal -> animal.getAnimalSpecie().equals(animalSpecie))
                 .toList();
     }
 
+    /**
+     * Fetches a list of Animals based on its adoption status
+     * @param adoptionStatus the status to look for
+     * @return a list of Animals by the specified adoption status
+     */
     public List<Animal> getAnimalsByAdoptionStatus(AdoptionStatus adoptionStatus) {
         return shelterService.getAllAnimals().stream()
                 .filter(animal -> animal.getAdoptionStatus().equals(adoptionStatus))
                 .toList();
     }
 
+    /**
+     * Returns an integer value based on the number of Animals by adoption status
+     * @param adoptionStatus the status to look for
+     * @return number of animals by status as an integer
+     */
     public int getAnimalCountByStatus(AdoptionStatus adoptionStatus) {
         return shelterService.getAnimalCountByStatus(adoptionStatus);
     }

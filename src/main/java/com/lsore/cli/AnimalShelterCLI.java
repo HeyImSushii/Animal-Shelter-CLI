@@ -75,15 +75,23 @@ public class AnimalShelterCLI {
         while (isRunning) {
             displayMainMenu();
             Scanner scanner = new Scanner(System.in);
-            String input = scanner.next();
-            switch (input) {
-                case "1" -> addAnimal();
-                case "2" -> listAllAnimals();
-                case "3" -> listAnimalsBySpecie();
-                case "4" -> listAnimalsByAdoptionStatus();
-                case "5" -> displaySubMenu();
-                case "6" -> removeAnimal();
-                case "7" -> {
+            switch (scanner.nextInt()) {
+                case 1 -> addAnimal();
+                case 2 -> listAllAnimals();
+                case 3 -> listAnimalsBySpecie();
+                case 4 -> listAnimalsByAdoptionStatus();
+                case 5 -> {
+                    displaySubMenu();
+                    switch (scanner.nextInt()) {
+                        case 1:
+                            consoleView.promptUpdateAnimalAdoptionStatus();
+                        case 2:
+                            System.out.println("Suboption 2");
+                        default: System.err.println("Invalid option!");
+                    }
+                }
+                case 6 -> removeAnimal();
+                case 7 -> {
                     isRunning = false;
                     exit();
                 }
