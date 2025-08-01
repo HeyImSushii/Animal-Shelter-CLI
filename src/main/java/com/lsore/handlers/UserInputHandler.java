@@ -9,22 +9,34 @@ public class UserInputHandler {
     private final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Reads user input from CLI as a string
+     * Reads the user input from the CLI as a string
      * @param message the message to print to the CLI
+     * @return returns the user input as a string
      */
     public String readLineString(String message) {
         System.out.println(message);
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     /**
-     * Reads user input from CLI as an integer
+     * Reads the user input from the CLI as a string array
      * @param message the message to print to the CLI
+     * @return returns the user input as a string array
+     */
+    public String[] readLineStringArray(String message) {
+        System.out.println(message);
+        return scanner.nextLine().trim().split("\\s+");
+    }
+
+    /**
+     * Reads the user input from the CLI as an integer
+     * @param message the message to print to the CLI
+     * @return returns the user input as an integer
      */
     public int readLineInteger(String message) {
         while (true) {
             System.out.println(message);
-            String input = scanner.next();
+            String input = scanner.nextLine();
             try {
                 int number = Integer.parseInt(input);
                 if (!(number >= 0)) {
@@ -38,8 +50,9 @@ public class UserInputHandler {
     }
 
     /**
-     * Reads user input from CLI as a boolean
+     * Reads the ser input from the CLI as a boolean
      * @param message the message to print to the CLI
+     * @return returns True or False
      */
     public boolean readLineBoolean(String message) {
         System.out.println(message);
@@ -57,7 +70,7 @@ public class UserInputHandler {
         while (true) {
             System.out.println(message);
             try {
-                return Enum.valueOf(values[0].getDeclaringClass(), scanner.next().toUpperCase());
+                return Enum.valueOf(values[0].getDeclaringClass(), scanner.nextLine().trim().toUpperCase());
             } catch (IllegalArgumentException e) {
                 System.err.println("Invalid input! The input value must be: " + Arrays.stream(values).toList());
             }

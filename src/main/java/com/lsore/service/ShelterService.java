@@ -21,10 +21,9 @@ public class ShelterService {
     /**
      * Removes an Animal by its unique ID from the shelter
      * @param uniqueId the unique ID of the Animal
-     * @return true if removed, false if not found
      */
-    public boolean removeAnimalById(int uniqueId) {
-        return shelter.removeAnimal(uniqueId);
+    public void removeAnimalById(int uniqueId) {
+        shelter.removeAnimal(uniqueId);
     }
 
     /**
@@ -43,9 +42,9 @@ public class ShelterService {
     public void addAnimal(Animal animal) {
         switch (animal) {
             case Cat cat ->
-                    shelter.addAnimal(new Cat(animal.getUniqueId(), animal.getAnimalName(), animal.getAnimalSpecie(), animal.getAnimalAge(), animal.getAnimalGender(), animal.getDateOfArrival(), animal.getAdoptionStatus(), cat.isIndoor()));
+                    shelter.addAnimal(new Cat(animal.getUniqueId(), animal.getAnimalName(), animal.getAnimalSpecie(), animal.getAnimalAge(), animal.getAnimalGender(), animal.getDateOfArrival(), animal.getAdoptionStatus(), animal.getAnimalDescription(), animal.getAnimalBenefits(), animal.getAnimalDrawbacks(), cat.isIndoor()));
             case Dog dog ->
-                    shelter.addAnimal(new Dog(animal.getUniqueId(), animal.getAnimalName(), animal.getAnimalSpecie(), animal.getAnimalAge(), animal.getAnimalGender(), animal.getDateOfArrival(), animal.getAdoptionStatus(), dog.isTrained(), dog.getWalkFrequency()));
+                    shelter.addAnimal(new Dog(animal.getUniqueId(), animal.getAnimalName(), animal.getAnimalSpecie(), animal.getAnimalAge(), animal.getAnimalGender(), animal.getDateOfArrival(), animal.getAdoptionStatus(), animal.getAnimalDescription(), animal.getAnimalBenefits(), animal.getAnimalDrawbacks(), dog.isTrained(), dog.getWalkFrequency()));
             case null, default -> {
             }
         }

@@ -23,11 +23,11 @@ public class Main {
         ConsoleView consoleView = new ConsoleView(shelterController);
 
         // TESTING ONLY //
-        shelter.addAnimal(new Cat(1234, "TestCat1", AnimalSpecie.CAT, 1, AnimalGender.FEMALE, LocalDate.now(), AdoptionStatus.AVAILABLE, true));
-        shelter.addAnimal(new Cat(4321, "TestCat2", AnimalSpecie.CAT, 1, AnimalGender.MALE, LocalDate.now(), AdoptionStatus.RESERVED, false));
-        shelter.addAnimal(new Dog(5678, "TestDog1", AnimalSpecie.DOG, 1, AnimalGender.MALE, LocalDate.now(), AdoptionStatus.AVAILABLE, true, 3));
-        shelter.addAnimal(new Dog(8765, "TestDog2", AnimalSpecie.DOG, 2, AnimalGender.FEMALE, LocalDate.now(), AdoptionStatus.ADOPTED, false, 300));
-        shelter.addAnimal(new Dog(4444, "TestDog9", AnimalSpecie.DOG, 2, AnimalGender.FEMALE, LocalDate.now(), AdoptionStatus.ADOPTED, false, 300));
+        shelter.addAnimal(new Cat(1234, "TestCat1", AnimalSpecie.CAT, 1, AnimalGender.FEMALE, LocalDate.now(), AdoptionStatus.AVAILABLE, new String[]{"Some", "description", "goes", "here"}, new String[]{"element1", "element2"}, new String[]{"element3", "element4"}, true));
+        shelter.addAnimal(new Cat(4321, "TestCat2", AnimalSpecie.CAT, 1, AnimalGender.MALE, LocalDate.now(), AdoptionStatus.RESERVED, new String[]{"Some", "description", "goes", "here"}, new String[]{"element1", "element2"}, new String[]{"element3", "element4"}, false));
+        shelter.addAnimal(new Dog(5678, "TestDog1", AnimalSpecie.DOG, 1, AnimalGender.MALE, LocalDate.now(), AdoptionStatus.AVAILABLE, new String[]{"Some", "description", "goes", "here"}, new String[]{"element1", "element2"}, new String[]{"element3", "element4"}, true, 3));
+        shelter.addAnimal(new Dog(8765, "TestDog2", AnimalSpecie.DOG, 2, AnimalGender.FEMALE, LocalDate.now(), AdoptionStatus.ADOPTED, new String[]{"Some", "description", "goes", "here"}, new String[]{"element1", "element2"}, new String[]{"element3", "element4"}, false, 300));
+        shelter.addAnimal(new Dog(4444, "TestDog9", AnimalSpecie.DOG, 2, AnimalGender.FEMALE, LocalDate.now(), AdoptionStatus.ADOPTED, new String[]{"Some", "description", "goes", "here"}, new String[]{"element1", "element2"}, new String[]{"element3", "element4"}, false, 300));
         // TESTING ONLY //
 
         AnimalShelterCLI animalShelterCLI = new AnimalShelterCLI(consoleView);

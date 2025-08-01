@@ -37,10 +37,14 @@ public class ConsoleView {
                         userInputHandler.readLineEnum(AnimalGender.values(), "Please enter the gender:"),
                         LocalDate.now(),
                         AdoptionStatus.AVAILABLE,
+                        userInputHandler.readLineStringArray("Please enter a description:"),
+                        userInputHandler.readLineStringArray("Please enter the benefits (Separated by whitespace):"),
+                        userInputHandler.readLineStringArray("Please enter the drawbacks (Separated by whitespace):"),
                         userInputHandler.readLineBoolean("Is it an indoor cat? (True or False):")
                 );
                 shelterController.addAnimal(animal);
                 System.out.println(colors.getGreen() + "The animal was added to the shelter:");
+                displayAnimalInformation(animal);
             }
             case DOG -> {
                 Dog animal = new Dog(
@@ -51,6 +55,9 @@ public class ConsoleView {
                         userInputHandler.readLineEnum(AnimalGender.values(), "Please enter the gender:"),
                         LocalDate.now(),
                         AdoptionStatus.AVAILABLE,
+                        userInputHandler.readLineStringArray("Please enter a description:"),
+                        userInputHandler.readLineStringArray("Please enter the benefits (Separated by whitespace):"),
+                        userInputHandler.readLineStringArray("Please enter the drawbacks (Separated by whitespace):"),
                         userInputHandler.readLineBoolean("Is the dog trained? (True or False):"),
                         userInputHandler.readLineInteger("Please enter number of daily walks:")
                 );
@@ -93,12 +100,8 @@ public class ConsoleView {
     // Prompts the required user inputs to remove an Animal from the shelter
     public void promptRemoveAnimal() {
         int uniqueId = userInputHandler.readLineInteger("Please enter the ID:");
-        if (shelterController.removeAnimal(uniqueId)) {
-            shelterController.removeAnimal(uniqueId);
-            System.out.printf("%sThe animal with the ID %s%d%s was removed from the shelter.%n", colors.getGreen(), colors.getMagenta(), uniqueId, colors.getGreen());
-            return;
-        }
-        System.out.printf("%sThere is no animals with the ID %s%d%s in the shelter.%n", colors.getRed(), colors.getMagenta(), uniqueId, colors.getRed());
+        shelterController.removeAnimal(uniqueId);
+        System.out.printf("%sThe animal with the ID %s%d%s was removed from the shelter.%n", colors.getGreen(), colors.getMagenta(), uniqueId, colors.getGreen());
     }
 
     /**
@@ -106,30 +109,24 @@ public class ConsoleView {
      * @param animal the animal to show information about
      */
     private void displayAnimalInformation(Animal animal) {
-        switch (animal) {
-            case Cat cat -> {
-                System.out.printf("%sID:%s %d%n", colors.getGreen(), colors.getWhite(), animal.getUniqueId());
-                System.out.printf("%sName:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalName());
-                System.out.printf("%sSpecie:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalSpecie());
-                System.out.printf("%sAge:%s %d%n", colors.getGreen(), colors.getWhite(), animal.getAnimalAge());
-                System.out.printf("%sGender:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalName());
-                System.out.printf("%sAdded:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getDateOfArrival());
-                System.out.printf("%sAdoption Status:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAdoptionStatus());
-                System.out.printf("%sisIndoor:%s %s%n", colors.getGreen(), colors.getWhite(), cat.isIndoor());
-            }
-            case Dog dog -> {
-                System.out.printf("%sID:%s %d%n", colors.getGreen(), colors.getWhite(), animal.getUniqueId());
-                System.out.printf("%sName:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalName());
-                System.out.printf("%sSpecie:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalSpecie());
-                System.out.printf("%sAge:%s %d%n", colors.getGreen(), colors.getWhite(), animal.getAnimalAge());
-                System.out.printf("%sGender:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalName());
-                System.out.printf("%sAdded:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getDateOfArrival());
-                System.out.printf("%sAdoption Status:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAdoptionStatus());
-                System.out.printf("%sisTrained:%s %s%n", colors.getGreen(), colors.getWhite(), dog.isTrained());
-                System.out.printf("%swalkFrequency:%s %s%n", colors.getGreen(), colors.getWhite(), dog.getWalkFrequency());
-            }
-            case null, default -> {
-            }
+        System.out.printf("%sID:%s %d%n", colors.getGreen(), colors.getWhite(), animal.getUniqueId());
+        System.out.printf("%sName:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalName());
+        System.out.printf("%sSpecie:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalSpecie().getSpecie());
+        System.out.printf("%sAge:%s %d%n", colors.getGreen(), colors.getWhite(), animal.getAnimalAge());
+        System.out.printf("%sGender:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAnimalGender().getGender());
+        System.out.printf("%sAdded:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getDateOfArrival());
+        System.out.printf("%sAdoption Status:%s %s%n", colors.getGreen(), colors.getWhite(), animal.getAdoptionStatus().getStatus());
+        System.out.printf("%sDescription: %s%s%n", colors.getGreen(), colors.getWhite(), String.join(" ", animal.getAnimalDescription()));
+        System.out.printf("%sBenefits: %s%s%n", colors.getGreen(), colors.getWhite(), String.join(", ", animal.getAnimalBenefits()));
+        System.out.printf("%sDrawbacks: %s%s%n", colors.getGreen(), colors.getWhite(), String.join(", ", animal.getAnimalDrawbacks()));
+
+        if (animal instanceof Cat) {
+            System.out.printf("%sisIndoor:%s %s%n", colors.getGreen(), colors.getWhite(), ((Cat) animal).isIndoor());
+        }
+
+        if (animal instanceof Dog) {
+            System.out.printf("%sisTrained:%s %s%n", colors.getGreen(), colors.getWhite(), ((Dog) animal).isTrained());
+            System.out.printf("%swalkFrequency:%s %s%n", colors.getGreen(), colors.getWhite(), ((Dog) animal).getWalkFrequency());
         }
     }
 
@@ -155,10 +152,12 @@ public class ConsoleView {
                 colors.getBlue(), colors.getWhite());
     }
 
+    // Prompts the required user inputs to update the adoption status of the Animal
     public void promptUpdateAnimalAdoptionStatus() {
         int uniqueId = userInputHandler.readLineInteger("Please enter the ID:");
         AdoptionStatus adoptionStatus = userInputHandler.readLineEnum(AdoptionStatus.values(), "Please enter the adoption status:");
-        shelterController.getAnimalByUniqueId(uniqueId).setAdoptionStatus(adoptionStatus);
-        System.out.println("updated");
+        Animal animal = shelterController.getAnimalByUniqueId(uniqueId);
+        animal.setAdoptionStatus(adoptionStatus);
+        System.out.printf("%sThe adoption status for the animal %s%s%s has been updated to %s%s%n", colors.getGreen(), colors.getMagenta(), animal.getAnimalName(), colors.getGreen(), colors.getMagenta(), adoptionStatus);
     }
 }

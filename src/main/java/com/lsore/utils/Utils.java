@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Utils {
 
+
     /**
      * Generates a random four-digit number.
      * @return random four-digit number

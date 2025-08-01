@@ -25,10 +25,9 @@ public class Shelter {
     /**
      * Removes an Animal from the shelter by its unique ID
      * @param uniqueId the unique four-digit ID
-     * @return true if found and removed
      */
-    public boolean removeAnimal(int uniqueId) {
-        return animals.removeIf(animal -> animal.getUniqueId() == uniqueId);
+    public void removeAnimal(int uniqueId) {
+        animals.remove(getAnimalById(uniqueId));
     }
 
     /**
@@ -66,14 +65,6 @@ public class Shelter {
     }
 
     /**
-     * Returns all animals in the shelter.
-     * @return the animals HashSet
-     */
-    public HashSet<Animal> getAnimals() {
-        return animals;
-    }
-
-    /**
      * Counts number of animals by a given adoption status.
      * @param adoptionStatus the adoption status to count
      * @return the count of animals with the given status
@@ -82,5 +73,13 @@ public class Shelter {
         return Math.toIntExact(animals.stream()
                 .filter(animal -> animal.getAdoptionStatus().equals(adoptionStatus))
                 .count());
+    }
+
+    /**
+     * Returns all animals in the shelter.
+     * @return the animals HashSet
+     */
+    public HashSet<Animal> getAnimals() {
+        return animals;
     }
 }

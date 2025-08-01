@@ -15,8 +15,20 @@ public class Animal {
     private AnimalGender animalGender;
     private LocalDate dateOfArrival;
     private AdoptionStatus adoptionStatus;
+    private String[] animalDescription;
+    private String[] animalBenefits;
+    private String[] animalDrawbacks;
 
-    public Animal(int uniqueId, String animalName, AnimalSpecie animalSpecie, int animalAge, AnimalGender animalGender, LocalDate dateOfArrival, AdoptionStatus adoptionStatus) {
+    public Animal(int uniqueId,
+                  String animalName,
+                  AnimalSpecie animalSpecie,
+                  int animalAge,
+                  AnimalGender animalGender,
+                  LocalDate dateOfArrival,
+                  AdoptionStatus adoptionStatus,
+                  String[] animalDescription,
+                  String[] animalBenefits,
+                  String[] animalDrawbacks) {
         this.uniqueId = uniqueId;
         this.animalName = animalName;
         this.animalSpecie = animalSpecie;
@@ -24,6 +36,10 @@ public class Animal {
         this.animalGender = animalGender;
         this.dateOfArrival = dateOfArrival;
         this.adoptionStatus = adoptionStatus;
+        this.animalDescription = animalDescription;
+        this.animalBenefits = animalBenefits;
+        this.animalDrawbacks = animalDrawbacks;
+
     }
 
     public int getUniqueId() {
@@ -80,5 +96,29 @@ public class Animal {
 
     public void setAdoptionStatus(AdoptionStatus adoptionStatus) {
         this.adoptionStatus = adoptionStatus;
+    }
+
+    public String[] getAnimalDescription() {
+        return animalDescription;
+    }
+
+    public void setAnimalDescription(String[] animalDescription) {
+        this.animalDescription = animalDescription;
+    }
+
+    public String[] getAnimalBenefits() {
+        return animalBenefits;
+    }
+
+    public void setAnimalBenefits(String[] animalBenefits) {
+        this.animalBenefits = animalBenefits;
+    }
+
+    public String[] getAnimalDrawbacks() {
+        return animalDrawbacks;
+    }
+
+    public void setAnimalDrawbacks(String[] animalDrawbacks) {
+        this.animalDrawbacks = animalDrawbacks;
     }
 }

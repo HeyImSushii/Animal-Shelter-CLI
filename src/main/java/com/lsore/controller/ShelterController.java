@@ -37,10 +37,9 @@ public class ShelterController {
     /**
      * Removes an Animal from the shelter by its unique ID
      * @param uniqueId the unique ID to look for
-     * @return True or False
      */
-    public boolean removeAnimal(int uniqueId) {
-        return shelterService.removeAnimalById(uniqueId);
+    public void removeAnimal(int uniqueId) {
+        shelterService.removeAnimalById(uniqueId);
     }
 
     /**
@@ -57,7 +56,7 @@ public class ShelterController {
      * @return the Animal as an object
      */
     public Animal getAnimalByUniqueId(int uniqueId) {
-        return getAnimals().stream().filter(animal -> animal.getUniqueId() == uniqueId).findFirst().orElseThrow();
+        return shelterService.getAnimalById(uniqueId);
     }
 
     /**
@@ -66,9 +65,7 @@ public class ShelterController {
      * @return a list of Animals by the specified specie
      */
     public List<Animal> getAnimalsBySpecie(AnimalSpecie animalSpecie) {
-        return shelterService.getAllAnimals().stream()
-                .filter(animal -> animal.getAnimalSpecie().equals(animalSpecie))
-                .toList();
+        return shelterService.getAnimalsBySpecie(animalSpecie);
     }
 
     /**
@@ -77,9 +74,7 @@ public class ShelterController {
      * @return a list of Animals by the specified adoption status
      */
     public List<Animal> getAnimalsByAdoptionStatus(AdoptionStatus adoptionStatus) {
-        return shelterService.getAllAnimals().stream()
-                .filter(animal -> animal.getAdoptionStatus().equals(adoptionStatus))
-                .toList();
+        return shelterService.getAnimalsByAdoptionStatus(adoptionStatus);
     }
 
     /**
