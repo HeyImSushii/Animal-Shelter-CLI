@@ -19,6 +19,14 @@ public class ShelterController {
     }
 
     /**
+     * Adds an Animal to the shelter
+     * @param animal the animal object
+     */
+    public void addAnimal(Animal animal) {
+        shelterService.addAnimal(animal);
+    }
+
+    /**
      * Adds a Cat Animal to the shelter
      * @param cat The cat object
      */

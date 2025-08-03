@@ -6,6 +6,7 @@ import com.lsore.enums.AnimalGender;
 import com.lsore.enums.AnimalSpecie;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Cat extends Animal {
 
@@ -19,8 +20,8 @@ public class Cat extends Animal {
                LocalDate dateOfArrival,
                AdoptionStatus adoptionStatus,
                String[] animalDescription,
-               String[] animalBenefits,
-               String[] animalDrawbacks,
+               List<String> animalBenefits,
+               List<String> animalDrawbacks,
                boolean isIndoor) {
         super(uniqueId, animalName, animalSpecie, animalAge, animalGender, dateOfArrival, adoptionStatus, animalDescription, animalBenefits, animalDrawbacks);
         this.isIndoor = isIndoor;

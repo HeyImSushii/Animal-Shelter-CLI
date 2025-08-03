@@ -1,11 +1,15 @@
 package com.lsore.animal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lsore.enums.AdoptionStatus;
 import com.lsore.enums.AnimalGender;
 import com.lsore.enums.AnimalSpecie;
 
 import java.time.LocalDate;
+import java.util.List;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Animal {
 
     private int uniqueId;
@@ -16,8 +20,12 @@ public class Animal {
     private LocalDate dateOfArrival;
     private AdoptionStatus adoptionStatus;
     private String[] animalDescription;
-    private String[] animalBenefits;
-    private String[] animalDrawbacks;
+    private List<String> animalBenefits;
+    private List<String> animalDrawbacks;
+
+    // Required for Jackson
+    public Animal() {
+    }
 
     public Animal(int uniqueId,
                   String animalName,
@@ -27,8 +35,8 @@ public class Animal {
                   LocalDate dateOfArrival,
                   AdoptionStatus adoptionStatus,
                   String[] animalDescription,
-                  String[] animalBenefits,
-                  String[] animalDrawbacks) {
+                  List<String> animalBenefits,
+                  List<String> animalDrawbacks) {
         this.uniqueId = uniqueId;
         this.animalName = animalName;
         this.animalSpecie = animalSpecie;
@@ -106,19 +114,19 @@ public class Animal {
         this.animalDescription = animalDescription;
     }
 
-    public String[] getAnimalBenefits() {
+    public List<String> getAnimalBenefits() {
         return animalBenefits;
     }
 
-    public void setAnimalBenefits(String[] animalBenefits) {
+    public void setAnimalBenefits(List<String> animalBenefits) {
         this.animalBenefits = animalBenefits;
     }
 
-    public String[] getAnimalDrawbacks() {
+    public List<String> getAnimalDrawbacks() {
         return animalDrawbacks;
     }
 
-    public void setAnimalDrawbacks(String[] animalDrawbacks) {
+    public void setAnimalDrawbacks(List<String> animalDrawbacks) {
         this.animalDrawbacks = animalDrawbacks;
     }
 }
