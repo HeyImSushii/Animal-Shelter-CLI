@@ -1,6 +1,7 @@
 package com.lsore.shelter;
 
 import com.lsore.animal.Animal;
+import com.lsore.animal.AnimalFile;
 import com.lsore.enums.AdoptionStatus;
 import com.lsore.enums.AnimalSpecie;
 
@@ -9,9 +10,11 @@ import java.util.*;
 public class Shelter {
 
     private final HashSet<Animal> animals;
+    private final AnimalFile animalFile;
 
     public Shelter() {
         animals = new HashSet<>();
+        animalFile = new AnimalFile();
     }
 
     /**
@@ -36,7 +39,7 @@ public class Shelter {
      * @return the animal with the matching ID, or null if none found
      */
     public Animal getAnimalById(int uniqueId) {
-        return animals.stream()
+        return animalFile.read().stream()
                 .filter(animal -> animal.getUniqueId() == uniqueId)
                 .findFirst()
                 .orElse(null);
@@ -48,7 +51,7 @@ public class Shelter {
      * @return list of animals matching the specie
      */
     public List<Animal> getAnimalsBySpecie(AnimalSpecie animalSpecie) {
-        return animals.stream()
+        return animalFile.read().stream()
                 .filter(animal -> animal.getAnimalSpecie().equals(animalSpecie))
                 .toList();
     }
@@ -59,7 +62,7 @@ public class Shelter {
      * @return list of animals matching the adoption status
      */
     public List<Animal> getAnimalsByAdoptionStatus(AdoptionStatus adoptionStatus) {
-        return animals.stream()
+        return animalFile.read().stream()
                 .filter(animal -> animal.getAdoptionStatus().equals(adoptionStatus))
                 .toList();
     }
@@ -70,7 +73,7 @@ public class Shelter {
      * @return the count of animals with the given status
      */
     public int getAnimalsCount(AdoptionStatus adoptionStatus) {
-        return Math.toIntExact(animals.stream()
+        return Math.toIntExact(animalFile.read().stream()
                 .filter(animal -> animal.getAdoptionStatus().equals(adoptionStatus))
                 .count());
     }
@@ -81,5 +84,9 @@ public class Shelter {
      */
     public HashSet<Animal> getAnimals() {
         return animals;
+    }
+
+    public AnimalFile getAnimalFile() {
+        return animalFile;
     }
 }

@@ -22,8 +22,8 @@ A command-line interface (CLI) application to manage an animal shelter. Built in
 
 - Java 23+
 - Enums for animal species, gender, and adoption status
-- Java Collections (HashSet, LinkedHashMap)
-- Gson for JSON serialization
+- Java Collections & Java Types
+- Jackson for JSON serialization
 - CLI user input handling with `Scanner`
 - Custom utility and color classes for console output
 
@@ -50,11 +50,11 @@ Follow on-screen prompts to add, list, and manage animals.
 ---
 
 ## Roadmap
- * Improve JSON serialization to support multiple animals in one file.
-   * Currently only supports one JSON object.
+ * ~~Improve JSON serialization to support multiple animals in one file.~~
+   * ~~Currently only supports one JSON object.~~
  * Implement search and filter features 
- ~~* Replace option 5 in the main menu with a submenu for updating animal info (e.g., name, age, adoption status)~~
- ~~* Implement exception handling and input validation~~ 
+ * ~~Replace option 5 in the main menu with a submenu for updating animal info (e.g., name, age, adoption status)~~
+ * Implement exception handling and input validation - **Almost done!**
  * Implement database integration for scalability
  * Implement unit testing and continuous integration
 

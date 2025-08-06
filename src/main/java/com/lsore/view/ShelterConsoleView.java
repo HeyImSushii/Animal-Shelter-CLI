@@ -8,6 +8,7 @@ import com.lsore.enums.AdoptionStatus;
 import com.lsore.enums.AnimalGender;
 import com.lsore.enums.AnimalSpecie;
 import com.lsore.handlers.UserInputHandler;
+import com.lsore.animal.AnimalFile;
 import com.lsore.utils.Colors;
 import com.lsore.utils.Utils;
 
@@ -19,10 +20,11 @@ public class ShelterConsoleView {
     private final Utils utils = new Utils();
     private final Colors colors = new Colors();
     private final ShelterController shelterController;
+    private final AnimalFile animalFile;
 
-    public ShelterConsoleView(ShelterController shelterController) {
+    public ShelterConsoleView(ShelterController shelterController, AnimalFile animalFile) {
         this.shelterController = shelterController;
-
+        this.animalFile = animalFile;
     }
     // Prompts the user inputs required to add an Animal to the shelter
     public void promptAddAnimal() {
@@ -43,6 +45,7 @@ public class ShelterConsoleView {
                         userInputHandler.readLineBoolean("Is it an indoor cat? (True or False):")
                 );
                 shelterController.addAnimal(animal);
+                animalFile.write(animal);
                 System.out.println(colors.getGreen() + "The animal was added to the shelter:");
                 displayAnimalInformation(animal);
             }
@@ -62,6 +65,7 @@ public class ShelterConsoleView {
                         userInputHandler.readLineInteger("Please enter number of daily walks:")
                 );
                 shelterController.addAnimal(animal);
+                animalFile.write(animal);
                 System.out.printf("%sThe animal was added to the shelter:%n", colors.getGreen());
             }
             case null, default -> {

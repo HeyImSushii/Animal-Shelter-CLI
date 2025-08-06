@@ -6,17 +6,15 @@ import java.util.Properties;
 public class AppConfigFile {
 
     private final AppConfig appConfig;
-    private final String filePath;
+    private final File file = new File(System.getProperty("user.home") + "/Animal-Shelter-CLI/config.properties");
 
-    public AppConfigFile(AppConfig appConfig, String filePath) {
+    public AppConfigFile(AppConfig appConfig) {
         this.appConfig = appConfig;
-        this.filePath = filePath;
         createFile();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void createFile() {
-        File file = new File(System.getProperty("user.home") + "/Animal-Shelter-CLI/config.properties");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -40,7 +38,7 @@ public class AppConfigFile {
 
     // Loads the properties file, and initialises the AppConfig model
     public void load() {
-        try (InputStream inputStream = new FileInputStream(filePath)) {
+        try (InputStream inputStream = new FileInputStream(file)) {
             Properties properties = new Properties();
             properties.load(inputStream);
             appConfig.setAppName(properties.getProperty("app.name"));

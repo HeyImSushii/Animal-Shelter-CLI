@@ -7,7 +7,6 @@ import com.lsore.enums.AdoptionStatus;
 import com.lsore.enums.AnimalSpecie;
 import com.lsore.service.ShelterService;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class ShelterController {
@@ -54,7 +53,7 @@ public class ShelterController {
      * Fetches all the Animals
      * @return the Animals as a HashSet
      */
-    public HashSet<Animal> getAnimals() {
+    public List<Animal> getAnimals() {
         return shelterService.getAllAnimals();
     }
 
