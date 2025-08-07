@@ -1,6 +1,8 @@
 package com.lsore.handlers;
 
-import com.lsore.utils.Colors;
+import com.lsore.enums.ColorType;
+import com.lsore.enums.MessageType;
+import com.lsore.view.ViewComponents;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class UserInputHandler {
 
-    private final Colors colors = new Colors();
+    private final ViewComponents viewComponents = new ViewComponents();
     private final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -50,14 +52,12 @@ public class UserInputHandler {
     public int readLineInteger(@Nullable String message) {
         while (true) {
             if (!(message == null)) System.out.println(message);
-            String input = scanner.nextLine();
-
             try {
-                int number = Integer.parseInt(input);
-                if (!(number >= 0)) System.err.println("Invalid input! The integer may not be less than 0.");
+                int number = Integer.parseInt(scanner.nextLine());
+                if (!(number >= 0)) viewComponents.printMessage(MessageType.ERROR,"Invalid input! The integer may not be less than 0.");
                 return number;
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input! The input value was not an integer.");
+                viewComponents.printMessage(MessageType.ERROR, "Invalid input! The input value was not an integer.");
             }
         }
     }
@@ -85,7 +85,9 @@ public class UserInputHandler {
             try {
                 return Enum.valueOf(values[0].getDeclaringClass(), scanner.nextLine().trim().toUpperCase());
             } catch (IllegalArgumentException e) {
-                System.out.printf("%sInvalid input! The input value must be: %s%s%n%s", colors.getRed(), colors.getMagenta(), Arrays.stream(values).map(Enum::name).collect(Collectors.joining(", ")), colors.getWhite());
+                viewComponents.printMessage(MessageType.ERROR, "Invalid input! The input value must be: %s%s"
+                        .formatted(ColorType.MAGENTA.getColor(),
+                        Arrays.stream(values).map(Enum::name).collect(Collectors.joining(", "))));
             }
         }
     }

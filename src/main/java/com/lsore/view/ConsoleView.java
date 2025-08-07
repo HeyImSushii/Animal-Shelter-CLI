@@ -1,42 +1,42 @@
 package com.lsore.view;
 
 import com.lsore.Main;
-import com.lsore.utils.Colors;
+import com.lsore.enums.ColorType;
+import com.lsore.enums.MessageType;
 
 public class ConsoleView {
 
-    private final Colors colors = new Colors();
+    private final ViewComponents viewComponents = new ViewComponents();
 
     // Displays the banner
     public void displayBanner() {
-        System.out.printf("%s────────────────────────────────────────%s%n", colors.getBlue(), colors.getReset());
-        System.out.printf("%s        %s v%s%s%n", colors.getMagenta(), Main.getAppConfig().getAppName(), Main.getAppConfig().getAppVersion(), colors.getWhite());
-        System.out.printf("%s  Authored by Ludvik Macdonald Sørensen%n", colors.getMagenta());
-        System.out.printf("%s%s%n", colors.getMagenta(), Main.getAppConfig().getGithubUrl());
-        System.out.printf("%s─────────────────────────────────────────%s", colors.getBlue(), colors.getWhite());
+        viewComponents.printLine(ColorType.BLUE, 40);
+        System.out.printf("%s        %s v%s%s%n", ColorType.MAGENTA.getColor(), Main.getAppConfig().getAppName(), Main.getAppConfig().getAppVersion(), ColorType.WHITE.getColor());
+        System.out.printf("%s  Authored by Ludvik Macdonald Sørensen%n", ColorType.MAGENTA.getColor());
+        System.out.printf("%s%s%n", ColorType.MAGENTA.getColor(), Main.getAppConfig().getGithubUrl());
+        viewComponents.printLine(ColorType.BLUE, 41);
     }
 
     // Displays the main menu
     public void displayMainMenu() {
-        System.out.println(colors.getGreen() + "\nPlease select one of the following options!" + colors.getWhite());
-        System.out.printf("%s[1]%s - %sAdd Animal%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[2]%s - %sList All Animals%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[3]%s - %sSearch Animals by Specie%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[4]%s - %sSearch Animals by Adoption Status%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[5]%s - %sUpdate Animal Information%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[6]%s - %sRemove Animal by ID%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[7]%s - %sExit Program%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[8]%s - %sClear Console%n\n", colors.getGreen(), colors.getGray(), colors.getWhite());
+        viewComponents.printMessage(MessageType.INFORMATION, "Please select one of the following options!");
+        viewComponents.menuOption(1, "Add Animal");
+        viewComponents.menuOption(2, "List All Animals");
+        viewComponents.menuOption(3, "Search Animals By Specie");
+        viewComponents.menuOption(4, "Search Animals By Adoption Status");
+        viewComponents.menuOption(5, "Update Animal Information");
+        viewComponents.menuOption(6, "Remove an Animal by ID");
+        viewComponents.menuOption(7, "Exit Application");
+        viewComponents.menuOption(8, "Clear Console");
     }
 
     // Displays the sub menu for option 5
     public void displaySubMenu() {
-        System.out.println(colors.getGreen() + "\nPlease select one of the following options!" + colors.getWhite());
-        System.out.printf("%s[1]%s - %sUpdate Adoption Status%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[2]%s - %sUpdate Description%n", colors.getGreen(), colors.getGray(), colors.getWhite());
-        System.out.printf("%s[3]%s - %sUpdate Benefits%n", colors.getGreen(), colors.getGray(), colors.getWhite()); // TODO: Implement logic
-        System.out.printf("%s[4]%s - %sUpdate Drawbacks%n", colors.getGreen(), colors.getGray(), colors.getWhite()); // TODO: Implement logic
-        System.out.printf("%s[7]%s - %sReturn to main menu%n\n", colors.getGreen(), colors.getGray(), colors.getWhite());
+        viewComponents.printMessage(MessageType.INFORMATION, "Please select one of the following options!");
+        viewComponents.menuOption(1, "Update Adoption Status");
+        viewComponents.menuOption(2, "Update Description");
+        viewComponents.menuOption(4, "Update Benefits");
+        viewComponents.menuOption(5, "Update Drawbacks");
+        viewComponents.menuOption(6, "Return To Main Menu");
     }
-
 }

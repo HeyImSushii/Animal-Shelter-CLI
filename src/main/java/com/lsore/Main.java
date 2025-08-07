@@ -3,10 +3,11 @@ package com.lsore;
 import com.lsore.cli.AnimalShelterCLI;
 import com.lsore.config.*;
 import com.lsore.controller.ShelterController;
+import com.lsore.enums.ColorType;
+import com.lsore.enums.MessageType;
 import com.lsore.service.ShelterService;
 import com.lsore.shelter.Shelter;
 import com.lsore.animal.AnimalFile;
-import com.lsore.utils.Colors;
 import com.lsore.view.*;
 
 import java.io.File;
@@ -14,7 +15,7 @@ import java.io.File;
 public class Main {
 
     private static final AppConfig appConfig = new AppConfig();
-    private static final Colors colors = new Colors();
+    private static final ViewComponents viewComponents = new ViewComponents();
 
     public static void main(String[] args) {
         // Initialises app architecture
@@ -40,11 +41,10 @@ public class Main {
     private static void createProjectDirectory() {
         File directory = new File(System.getProperty("user.home") + "/Animal-Shelter-CLI");
         if (!directory.exists()) {
-            System.out.printf("%sThe project directory does not exist!%n", colors.getRed());
             directory.mkdir();
             directory.setReadable(true);
             directory.setWritable(true);
-            System.out.printf("%sThe project directory was created at: %s%s%n", colors.getGreen(), colors.getMagenta(), directory.getPath());
+            viewComponents.printMessage(MessageType.SUCCESS, "The project directory was created at: %s%s".formatted(ColorType.MAGENTA, directory.getPath()));
         }
     }
 

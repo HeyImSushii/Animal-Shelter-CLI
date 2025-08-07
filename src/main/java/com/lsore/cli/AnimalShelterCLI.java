@@ -1,16 +1,16 @@
 package com.lsore.cli;
 
-import com.lsore.utils.Colors;
+import com.lsore.enums.MessageType;
 import com.lsore.view.AnimalConsoleView;
 import com.lsore.view.ConsoleView;
 import com.lsore.view.ShelterConsoleView;
+import com.lsore.view.ViewComponents;
 
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class AnimalShelterCLI {
-    private final Colors colors = new Colors();
     private final ConsoleView consoleView = new ConsoleView();
+    private final ViewComponents viewComponents = new ViewComponents();
     private final AnimalConsoleView animalConsoleView;
     private final ShelterConsoleView shelterConsoleView;
 
@@ -46,13 +46,13 @@ public class AnimalShelterCLI {
 
     // Option 7: Exit Program
     private void exit() {
-        System.out.println(colors.getGreen() + "Exiting program!");
+        viewComponents.printMessage(MessageType.SUCCESS, "Exiting program!");
         System.exit(0);
     }
 
     // Option 99: Clears the CLI
     private void clearConsole() {
-        IntStream.range(0, 128).mapToObj(_ -> " ").forEach(System.out::println);
+        viewComponents.lineBreak(128);
     }
 
     // Handle user input for main menu
@@ -72,7 +72,7 @@ public class AnimalShelterCLI {
                         case 1 -> animalConsoleView.promptUpdateAnimalAdoptionStatus();
                         case 2 -> animalConsoleView.promptUpdateAnimalDescription();
                         case 3 -> System.out.println("WIP");
-                        default -> System.err.println("Invalid option!");
+                        default -> viewComponents.printMessage(MessageType.ERROR, "Invalid option!");
                     }
                 }
                 case 6 -> removeAnimal();
@@ -81,7 +81,7 @@ public class AnimalShelterCLI {
                     exit();
                 }
                 case 8 -> clearConsole();
-                default -> System.err.println("Invalid option!");
+                default -> viewComponents.printMessage(MessageType.ERROR, "Invalid option!");
             }
         }
     }

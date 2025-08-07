@@ -23,10 +23,6 @@ public class Animal {
     private List<String> animalBenefits;
     private List<String> animalDrawbacks;
 
-    // Required for Jackson
-    public Animal() {
-    }
-
     public Animal(int uniqueId,
                   String animalName,
                   AnimalSpecie animalSpecie,
@@ -47,8 +43,11 @@ public class Animal {
         this.animalDescription = animalDescription;
         this.animalBenefits = animalBenefits;
         this.animalDrawbacks = animalDrawbacks;
-
     }
+
+    // Required for Jackson
+    public Animal() {}
+
 
     public int getUniqueId() {
         return uniqueId;
