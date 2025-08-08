@@ -7,7 +7,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 public class AnimalFile {
@@ -26,20 +25,6 @@ public class AnimalFile {
             animalList = objectMapper.readValue(file, new TypeReference<>() {});
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void createFile() {
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                file.setWritable(true);
-                file.setReadable(true);
-                Files.writeString(file.toPath(), "[]"); // Ensures the file is not empty
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 

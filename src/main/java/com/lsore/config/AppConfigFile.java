@@ -10,29 +10,23 @@ public class AppConfigFile {
 
     public AppConfigFile(AppConfig appConfig) {
         this.appConfig = appConfig;
-        createFile();
+        setDefaultValues();
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void createFile() {
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                file.setWritable(true);
-                file.setReadable(true);
+    // Set defaults values if the file is empty
+    public void setDefaultValues() {
+        if (!(file.length() == 0)) {
+            return;
+        }
 
-                try (FileWriter fileWriter = new FileWriter(file)) {
-                    Properties properties = new Properties();
-                    properties.setProperty("app.name", "Animal-Shelter-CLI");
-                    properties.setProperty("app.version", "1.0.0");
-                    properties.setProperty("github.url", "github.com/HeyImSushii/Animal-Shelter-CLI");
-                    properties.store(fileWriter, "App Config");
-                } catch (IOException e) {
-                    throw new IOException(e);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            Properties properties = new Properties();
+            properties.setProperty("app.name", "Animal-Shelter-CLI");
+            properties.setProperty("app.version", "1.0.0");
+            properties.setProperty("github.url", "github.com/HeyImSushii/Animal-Shelter-CLI");
+            properties.store(fileWriter, "App Config");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -1,16 +1,20 @@
 package com.lsore.cli;
 
+import com.lsore.Logger.Logger;
+import com.lsore.Main;
 import com.lsore.enums.MessageType;
 import com.lsore.view.AnimalConsoleView;
 import com.lsore.view.ConsoleView;
 import com.lsore.view.ShelterConsoleView;
-import com.lsore.view.ViewComponents;
+import com.lsore.utils.MessageUtils;
 
 import java.util.Scanner;
 
 public class AnimalShelterCLI {
+
     private final ConsoleView consoleView = new ConsoleView();
-    private final ViewComponents viewComponents = new ViewComponents();
+    private final MessageUtils messageUtils = new MessageUtils();
+    private final Logger logger = new Logger();
     private final AnimalConsoleView animalConsoleView;
     private final ShelterConsoleView shelterConsoleView;
 
@@ -46,13 +50,13 @@ public class AnimalShelterCLI {
 
     // Option 7: Exit Program
     private void exit() {
-        viewComponents.printMessage(MessageType.SUCCESS, "Exiting program!");
+        messageUtils.printMessage(MessageType.SUCCESS, true,"Exiting program!");
         System.exit(0);
     }
 
     // Option 99: Clears the CLI
     private void clearConsole() {
-        viewComponents.lineBreak(128);
+        messageUtils.lineBreak(128);
     }
 
     // Handle user input for main menu
@@ -72,7 +76,7 @@ public class AnimalShelterCLI {
                         case 1 -> animalConsoleView.promptUpdateAnimalAdoptionStatus();
                         case 2 -> animalConsoleView.promptUpdateAnimalDescription();
                         case 3 -> System.out.println("WIP");
-                        default -> viewComponents.printMessage(MessageType.ERROR, "Invalid option!");
+                        default -> messageUtils.printMessage(MessageType.ERROR, true,"Invalid option!");
                     }
                 }
                 case 6 -> removeAnimal();
@@ -81,13 +85,14 @@ public class AnimalShelterCLI {
                     exit();
                 }
                 case 8 -> clearConsole();
-                default -> viewComponents.printMessage(MessageType.ERROR, "Invalid option!");
+                default -> messageUtils.printMessage(MessageType.ERROR,true, "Invalid option!");
             }
         }
     }
 
     // Runs the CLI
     public void start() {
+        logger.write(MessageType.INFORMATION, "The app has been launched! The launch time was ~" + Main.getStartTime() + "ms");
         consoleView.displayBanner();
         handleMainMenuUserInput();
     }

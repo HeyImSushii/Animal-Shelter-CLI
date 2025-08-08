@@ -5,11 +5,12 @@ import com.lsore.controller.ShelterController;
 import com.lsore.enums.AdoptionStatus;
 import com.lsore.enums.MessageType;
 import com.lsore.handlers.UserInputHandler;
+import com.lsore.utils.MessageUtils;
 
 public class AnimalConsoleView {
 
     private final UserInputHandler userInputHandler = new UserInputHandler();
-    private final ViewComponents viewComponents = new ViewComponents();
+    private final MessageUtils messageUtils = new MessageUtils();
     private final ShelterController shelterController;
 
     public AnimalConsoleView(ShelterController shelterController) {
@@ -18,11 +19,11 @@ public class AnimalConsoleView {
 
     // Prompts the required user inputs to update the adoption status of the Animal
     public void promptUpdateAnimalAdoptionStatus() {
-        int uniqueId = userInputHandler.readLineInteger(viewComponents.message(MessageType.OPTION, "Please enter the ID:"));
-        AdoptionStatus adoptionStatus = userInputHandler.readLineEnum(AdoptionStatus.values(), viewComponents.message(MessageType.OPTION, "Please enter the adoption status:"));
+        int uniqueId = userInputHandler.readLineInteger(messageUtils.message(MessageType.OPTION, false,"Please enter the ID:"));
+        AdoptionStatus adoptionStatus = userInputHandler.readLineEnum(AdoptionStatus.values(), messageUtils.message(MessageType.OPTION, false,"Please enter the adoption status:"));
         Animal animal = shelterController.getAnimalByUniqueId(uniqueId);
         animal.setAdoptionStatus(adoptionStatus);
-        viewComponents.printMessage(MessageType.INFORMATION, "The adoption status of the animal has been updated!");
+        messageUtils.printMessage(MessageType.INFORMATION, false,"The adoption status of the animal has been updated!");
     }
 
     // Prompts the required user inputs to update the description fo the Animal

@@ -4,8 +4,7 @@ public enum MessageType {
     INFORMATION("Information"),
     OPTION("Option"),
     SUCCESS("Success"),
-    ERROR("Error"),
-    DEFAULT("Default");
+    ERROR("Error");
 
     private final String type;
 
@@ -13,7 +12,7 @@ public enum MessageType {
         this.type = type;
     }
 
-    private String getType() {
+    public String getType() {
         return type;
     }
 }

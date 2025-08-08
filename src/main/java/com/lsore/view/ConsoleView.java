@@ -3,40 +3,43 @@ package com.lsore.view;
 import com.lsore.Main;
 import com.lsore.enums.ColorType;
 import com.lsore.enums.MessageType;
+import com.lsore.utils.MessageUtils;
 
 public class ConsoleView {
 
-    private final ViewComponents viewComponents = new ViewComponents();
+    private final MessageUtils messageUtils = new MessageUtils();
 
     // Displays the banner
     public void displayBanner() {
-        viewComponents.printLine(ColorType.BLUE, 40);
-        System.out.printf("%s        %s v%s%s%n", ColorType.MAGENTA.getColor(), Main.getAppConfig().getAppName(), Main.getAppConfig().getAppVersion(), ColorType.WHITE.getColor());
-        System.out.printf("%s  Authored by Ludvik Macdonald Sørensen%n", ColorType.MAGENTA.getColor());
-        System.out.printf("%s%s%n", ColorType.MAGENTA.getColor(), Main.getAppConfig().getGithubUrl());
-        viewComponents.printLine(ColorType.BLUE, 41);
+        int lineLength = 41;
+        messageUtils.printLine(ColorType.BLUE, lineLength);
+        messageUtils.printMessageCentered(lineLength, "%s%s v%s".formatted(ColorType.MAGENTA.getColor(), Main.getAppConfig().getAppName(), Main.getAppConfig().getAppVersion()));
+        messageUtils.printMessageCentered(lineLength, "Authored by Ludvik Macdonald Sørensen");
+        messageUtils.printMessageCentered(0, Main.getAppConfig().getGithubUrl());
+        messageUtils.printMessageCentered(lineLength, "Launched in " + Main.getStartTime() + "ms");
+        messageUtils.printLine(ColorType.BLUE, lineLength);
     }
 
     // Displays the main menu
     public void displayMainMenu() {
-        viewComponents.printMessage(MessageType.INFORMATION, "Please select one of the following options!");
-        viewComponents.menuOption(1, "Add Animal");
-        viewComponents.menuOption(2, "List All Animals");
-        viewComponents.menuOption(3, "Search Animals By Specie");
-        viewComponents.menuOption(4, "Search Animals By Adoption Status");
-        viewComponents.menuOption(5, "Update Animal Information");
-        viewComponents.menuOption(6, "Remove an Animal by ID");
-        viewComponents.menuOption(7, "Exit Application");
-        viewComponents.menuOption(8, "Clear Console");
+        messageUtils.printMessage(MessageType.INFORMATION, false,"Please select one of the following options!");
+        messageUtils.menuOption(1, "Add Animal");
+        messageUtils.menuOption(2, "List All Animals");
+        messageUtils.menuOption(3, "Search Animals By Specie");
+        messageUtils.menuOption(4, "Search Animals By Adoption Status");
+        messageUtils.menuOption(5, "Update Animal Information");
+        messageUtils.menuOption(6, "Remove an Animal by ID");
+        messageUtils.menuOption(7, "Exit Application");
+        messageUtils.menuOption(8, "Clear Console");
     }
 
     // Displays the sub menu for option 5
     public void displaySubMenu() {
-        viewComponents.printMessage(MessageType.INFORMATION, "Please select one of the following options!");
-        viewComponents.menuOption(1, "Update Adoption Status");
-        viewComponents.menuOption(2, "Update Description");
-        viewComponents.menuOption(4, "Update Benefits");
-        viewComponents.menuOption(5, "Update Drawbacks");
-        viewComponents.menuOption(6, "Return To Main Menu");
+        messageUtils.printMessage(MessageType.INFORMATION, false,"Please select one of the following options!");
+        messageUtils.menuOption(1, "Update Adoption Status");
+        messageUtils.menuOption(2, "Update Description");
+        messageUtils.menuOption(4, "Update Benefits");
+        messageUtils.menuOption(5, "Update Drawbacks");
+        messageUtils.menuOption(6, "Return To Main Menu");
     }
 }

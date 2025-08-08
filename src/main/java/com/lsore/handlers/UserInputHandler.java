@@ -2,7 +2,7 @@ package com.lsore.handlers;
 
 import com.lsore.enums.ColorType;
 import com.lsore.enums.MessageType;
-import com.lsore.view.ViewComponents;
+import com.lsore.utils.MessageUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class UserInputHandler {
 
-    private final ViewComponents viewComponents = new ViewComponents();
+    private final MessageUtils messageUtils = new MessageUtils();
     private final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -54,10 +54,10 @@ public class UserInputHandler {
             if (!(message == null)) System.out.println(message);
             try {
                 int number = Integer.parseInt(scanner.nextLine());
-                if (!(number >= 0)) viewComponents.printMessage(MessageType.ERROR,"Invalid input! The integer may not be less than 0.");
+                if (!(number >= 0)) messageUtils.printMessage(MessageType.ERROR,false,"Invalid input! The integer may not be less than 0.");
                 return number;
             } catch (NumberFormatException e) {
-                viewComponents.printMessage(MessageType.ERROR, "Invalid input! The input value was not an integer.");
+                messageUtils.printMessage(MessageType.ERROR, false,"Invalid input! The input value was not an integer.");
             }
         }
     }
@@ -85,7 +85,7 @@ public class UserInputHandler {
             try {
                 return Enum.valueOf(values[0].getDeclaringClass(), scanner.nextLine().trim().toUpperCase());
             } catch (IllegalArgumentException e) {
-                viewComponents.printMessage(MessageType.ERROR, "Invalid input! The input value must be: %s%s"
+                messageUtils.printMessage(MessageType.ERROR, false,"Invalid input! The input value must be: %s%s"
                         .formatted(ColorType.MAGENTA.getColor(),
                         Arrays.stream(values).map(Enum::name).collect(Collectors.joining(", "))));
             }
